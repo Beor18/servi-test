@@ -5,9 +5,9 @@ import { WEATHER_KEY, CITY_ID } from "../utils/key";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import moment from "moment";
 
+import Loading from "../components/Loading";
 import CardWheather from "../components/Card";
 
 import axios from "../utils/weather";
@@ -16,36 +16,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  container: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    left: 0,
-    top: 0,
-    zIndex: 3,
-	},
-	containerCard: {
-		marginTop: 20
-	},
-  containerLoading: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    flexFlow: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  loading: {
-    alignItems: "center",
-    display: "flex",
-    flexFlow: "column",
+  containerCard: {
+    marginTop: 20,
   },
 }));
 
 const Forecast = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  //const history = useHistory();
   const classes = useStyles();
 
   useEffect(() => {
@@ -62,16 +40,7 @@ const Forecast = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className={classes.container}>
-        <div className={classes.containerLoading}>
-          <div className={classes.loading}>
-            <CircularProgress />
-            <h2>Cargando...</h2>
-          </div>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -81,7 +50,7 @@ const Forecast = () => {
           <Grid item xs={12} sm={12} md={4} key={index}>
             <div className={classes.containerCard}>
               <Link
-                to={`/${moment(item.dt_txt).format('Do_MMMM')}`}
+                to={`/forecast/${moment(item.dt_txt).format("Do_MMMM")}`}
                 key={index}
                 style={{ textDecoration: "none" }}
               >

@@ -4,11 +4,8 @@ import { WEATHER_KEY, CITY_ID } from "../utils/key";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
-// import moment from "moment";
-
-// import Navbar from "../components/Navbar";
-// import CardWheather from "../components/Card";
+import Loading from "../components/Loading";
+import CardWheather from "../components/Card";
 
 import axios from "../utils/weather";
 
@@ -17,29 +14,17 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   container: {
-    position: "absolute",
+    position: 'absolute',
     width: "100%",
-    height: "100%",
-    left: 0,
-    top: 0,
-    zIndex: 3,
-  },
-  containerLoading: {
-    width: "100%",
-    height: "100%",
+    height: "70%",
     display: "flex",
-    flexFlow: "row",
+    flexFlow: "column",
     alignItems: "center",
     justifyContent: "center",
   },
-  loading: {
-    alignItems: "center",
-    display: "flex",
-    flexFlow: "column",
-  },
 }));
 
-const Daily = () => {
+const Daily = ({ match }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const classes = useStyles();
@@ -57,42 +42,26 @@ const Daily = () => {
     getData();
   }, []);
 
+  const daily = items.find((e) => (e.dt_txt = match.params.id)) || [];
+
   if (loading) {
-    return (
-      <div className={classes.container}>
-        <div className={classes.containerLoading}>
-          <div className={classes.loading}>
-            <CircularProgress />
-            <h2>Cargando...</h2>
-          </div>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
     <Grid container className={classes.root} spacing={2}>
-        {console.log(items)}
-      {/* {items.map((item, index) => {
-        return (
-          <Grid item xs={12} sm={12} md={4} key={index}>
-            <CardWheather
-              time={moment(item.dt_txt)
-                .locale("es")
-                .format("MMMM Do YYYY, h:mm a")}
-              temperatureMin={Math.round(item.main.temp_min)}
-              temperatureMax={Math.round(item.main.temp_max)}
-              description={item.weather.map((i) => {
-                return i.description;
-              })}
-              humidity={item.main.humidity}
-              image={item.weather.map((i) => {
-                return i.icon;
-              })}
-            />
-          </Grid>
-        );
-      })} */}
+      <div className={classes.container}>
+        <CardWheather
+          time={daily.dt_txt}
+          description={daily.weather[0].description}
+          humidity={daily.main.humidity}
+          temperatureMin={Math.round(daily.main.temp_min)}
+          temperatureMax={Math.round(daily.main.temp_max)}
+          image={daily.weather.map((i) => {
+            return i.icon;
+          })}
+        />
+      </div>
     </Grid>
   );
 };
