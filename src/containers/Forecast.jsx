@@ -31,7 +31,6 @@ const Forecast = () => {
       const result = await axios.get(
         `forecast?id=${CITY_ID}&APPID=${WEATHER_KEY}&units=metric&lang=es`
       );
-      console.log("fer forecast ", result.data.list);
       setItems(get(result, "data.list", []));
       setLoading(false);
     };
