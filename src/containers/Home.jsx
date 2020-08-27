@@ -7,8 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import moment from "moment";
 
-import Navbar from "../components/Navbar";
 import CardWheather from "../components/Card";
+import Chart from "../components/Chart";
 
 import axios from "../utils/weather";
 
@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     zIndex: 3,
   },
+  containerGrid: {
+      marginTop: 20
+  },
   containerLoading: {
     width: "100%",
     height: "100%",
@@ -33,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   loading: {
-    alignItems: 'center',
-    display: 'flex',
-    flexFlow: 'column'
-  }
+    alignItems: "center",
+    display: "flex",
+    flexFlow: "column",
+  },
 }));
 
 const Home = () => {
@@ -72,8 +75,7 @@ const Home = () => {
 
   return (
     <Grid container className={classes.root} spacing={2}>
-      <Navbar />
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={12} md={6} className={classes.containerGrid}>
         <CardWheather
           time={moment(items.dt_txt).format("MMMM Do YYYY, h:mm a")}
           city={items.name + ", CHILE"}
@@ -87,6 +89,9 @@ const Home = () => {
             return i.icon;
           })}
         />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <Chart />
       </Grid>
     </Grid>
   );

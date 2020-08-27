@@ -34,6 +34,7 @@ const CardWheather = ({
   temperatureMax,
   humidity,
   image,
+  id,
   description,
 }) => {
   const classes = useStyles();
@@ -67,7 +68,7 @@ const CardWheather = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Ver Más</Button>
+        <Button size="small" href={id}>Ver Más</Button>
       </CardActions>
     </Card>
   );

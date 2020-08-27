@@ -33,7 +33,7 @@ const Navbar = () => {
           {match && "Inicio"}
         </Button>
         <Button color="inherit" onClick={() => history.push("/forecast")}>
-          {match && "Pronostico 5 Días"}
+          {match && "Pronostico de cada 3 Horas"}
         </Button>
       </Toolbar>
     </AppBar>
