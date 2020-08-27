@@ -5,10 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import moment from "moment";
+// import moment from "moment";
 
-import Navbar from "../components/Navbar";
-import CardWheather from "../components/Card";
+// import Navbar from "../components/Navbar";
+// import CardWheather from "../components/Card";
 
 import axios from "../utils/weather";
 
@@ -72,6 +72,7 @@ const Daily = () => {
 
   return (
     <Grid container className={classes.root} spacing={2}>
+        {console.log(items)}
       {/* {items.map((item, index) => {
         return (
           <Grid item xs={12} sm={12} md={4} key={index}>
