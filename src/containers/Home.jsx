@@ -97,7 +97,7 @@ const Home = () => {
                   style={{ textDecoration: "none" }}
                 >
                   <CardWheather
-                    time={moment(item.sunrise).locale("es").format("MMMM Do")}
+                    time={moment.unix(item.dt).format("Do MMMM")}
                     temperatureMin={Math.round(item.temp.min)}
                     temperatureMax={Math.round(item.temp.max)}
                     description={item.weather.map((i) => {
