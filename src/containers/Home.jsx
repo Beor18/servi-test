@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   containerGrid: {
     marginTop: 20,
   },
+  containerGridCard: {
+    margin: 20,
+  },
 }));
 
 const Home = () => {
@@ -89,7 +92,7 @@ const Home = () => {
         </h2>
         {call.slice(0, 5).map((item, index) => {
           return (
-            <Grid item xs={12} sm={12} md={4} key={index}>
+            <Grid item xs={12} sm={12} md={2} key={index} className={classes.containerGridCard}>
               <div className={classes.containerCard}>
                 <Link
                   to={`/forecast/${moment(item.sunrise).format("Do_MMMM")}`}
