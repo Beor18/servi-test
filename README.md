@@ -4,7 +4,7 @@
 - Para el formateo de fechas utilice la librería Moment.
 - Consumo de API, la librería AXIOS.
 
-Aclaración: primera vez que utilizo la librería VX para los chart, puse un ejemplo, por falta de tiempo no pude pasar la data real al gráfico. Falta mejorar la vista responsive.
+Aclaración: primera vez que utilizo la librería VX para los chart, puse un ejemplo, por falta de tiempo no pude pasar la data real al gráfico. Falta mejorar la vista responsive (por falta de tiempo).
 
 #### Tecnologies
 - Framework: Reactjs

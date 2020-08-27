@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import get from "lodash/get";
-import { WEATHER_KEY, CITY_ID } from "../utils/key";
+import { WEATHER_KEY, CITY_ID, lat, lon } from "../utils/key";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
@@ -17,6 +17,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  containerDaily: {
+    width: "100%",
+  },
+  containerTitleDaily: {
+    width: "100%",
+    padding: 20,
+  },
   containerGrid: {
     marginTop: 20,
   },
@@ -24,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const [items, setItems] = useState([]);
+  const [call, setCall] = useState([]);
   const [loading, setLoading] = useState(true);
   const classes = useStyles();
 
@@ -32,8 +40,12 @@ const Home = () => {
       const result = await axios.get(
         `weather?id=${CITY_ID}&APPID=${WEATHER_KEY}&units=metric&lang=es`
       );
-      console.log("fer data ", result.data);
+      const daily = await axios.get(
+        `onecall?lat=${lat}&lon=${lon}&units=metric&lang=es&APPID=${WEATHER_KEY}`
+      );
+
       setItems(get(result, "data", []));
+      setCall(get(daily, "data.daily", []));
       setLoading(false);
     };
 
@@ -70,6 +82,38 @@ const Home = () => {
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <Chart />
+      </Grid>
+      <Grid container className={classes.containerDaily} spacing={2}>
+        <h2 className={classes.containerTitleDaily}>
+          Pronostico próximos 5 días
+        </h2>
+        {call.slice(0, 5).map((item, index) => {
+          return (
+            <Grid item xs={12} sm={12} md={4} key={index}>
+              <div className={classes.containerCard}>
+                <Link
+                  to={`/forecast/${moment(item.sunrise).format("Do_MMMM")}`}
+                  key={index}
+                  style={{ textDecoration: "none" }}
+                >
+                  <CardWheather
+                    time={moment(item.sunrise).locale("es").format("MMMM Do")}
+                    temperatureMin={Math.round(item.temp.min)}
+                    temperatureMax={Math.round(item.temp.max)}
+                    description={item.weather.map((i) => {
+                      return i.description;
+                    })}
+                    button={false}
+                    humidity={call.humidity}
+                    image={item.weather.map((i) => {
+                      return i.icon;
+                    })}
+                  />
+                </Link>
+              </div>
+            </Grid>
+          );
+        })}
       </Grid>
     </Grid>
   );
