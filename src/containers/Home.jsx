@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import get from "lodash/get";
 import { WEATHER_KEY, CITY_ID } from "../utils/key";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import moment from "moment";
@@ -46,19 +47,26 @@ const Home = () => {
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12} sm={12} md={6} className={classes.containerGrid}>
-        <CardWheather
-          time={moment(items.dt_txt).format("MMMM Do YYYY, h:mm a")}
-          city={items.name + ", CHILE"}
-          description={items.weather.map((i) => {
-            return i.description;
-          })}
-          humidity={items.main.humidity}
-          temperatureMin={Math.round(items.main.temp_min)}
-          temperatureMax={Math.round(items.main.temp_max)}
-          image={items.weather.map((i) => {
-            return i.icon;
-          })}
-        />
+        <Link
+          to={`/forecast/${moment(items.dt_txt).format("Do_MMMM")}`}
+          key={items}
+          style={{ textDecoration: "none" }}
+        >
+          <CardWheather
+            time={moment(items.dt_txt).format("MMMM Do YYYY, h:mm a")}
+            city={items.name + ", CHILE"}
+            description={items.weather.map((i) => {
+              return i.description;
+            })}
+            button={false}
+            humidity={items.main.humidity}
+            temperatureMin={Math.round(items.main.temp_min)}
+            temperatureMax={Math.round(items.main.temp_max)}
+            image={items.weather.map((i) => {
+              return i.icon;
+            })}
+          />
+        </Link>
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <Chart />

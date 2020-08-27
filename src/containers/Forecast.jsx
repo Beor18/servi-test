@@ -63,6 +63,7 @@ const Forecast = () => {
                   description={item.weather.map((i) => {
                     return i.description;
                   })}
+                  button={false}
                   humidity={item.main.humidity}
                   image={item.weather.map((i) => {
                     return i.icon;

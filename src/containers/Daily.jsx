@@ -53,6 +53,7 @@ const Daily = ({ match }) => {
       <div className={classes.container}>
         <CardWheather
           time={daily.dt_txt}
+          button={false}
           description={daily.weather[0].description}
           humidity={daily.main.humidity}
           temperatureMin={Math.round(daily.main.temp_min)}
