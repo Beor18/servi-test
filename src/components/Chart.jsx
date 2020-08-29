@@ -7,13 +7,10 @@ import { AxisLeft, AxisBottom } from "@vx/axis";
 import { LinearGradient } from "@vx/gradient";
 import { extent, max } from "d3-array";
 
-const data = appleStock;
+//const data = appleStock;
 
 const width = 750;
 const height = 400;
-
-const x = (d) => new Date(d.date);
-const y = (d) => d.close;
 
 // Bounds
 const margin = {
@@ -25,16 +22,18 @@ const margin = {
 const xMax = width - margin.left - margin.right;
 const yMax = height - margin.top - margin.bottom;
 
-const xScale = scaleTime({
-  range: [0, xMax],
-  domain: extent(data, x),
-});
-const yScale = scaleLinear({
-  range: [yMax, 0],
-  domain: [0, max(data, y)],
-});
+const Chart = ({ data = [], dataX, dataY }) => {
+  const xScale = scaleTime({
+    range: [0, xMax],
+    domain: extent(dataX),
+  });
+  const yScale = scaleLinear({
+    range: [yMax, 0],
+    domain: [0, max(dataY)],
+  });
 
-const Chart = () => {
+  // const x = (d) => new Date(d.date);
+  // const y = (d) => d.close;
   return (
     <div>
       <svg width={width} height={height}>
@@ -42,11 +41,11 @@ const Chart = () => {
 
         <Group top={margin.top} left={margin.left}>
           <AreaClosed
-            data={data}
+            data={dataX}
             xScale={xScale}
             yScale={yScale}
-            x={d => xScale(x(d))}
-            y={d => yScale(y(d))}
+            x={xScale}
+            y={yScale}
             fill={"url(#gradient)"}
             stroke={""}
           />
@@ -55,7 +54,6 @@ const Chart = () => {
             scale={yScale}
             top={0}
             left={0}
-            label={"Close Price ($)"}
             stroke={"#1b1a1e"}
             tickTextFill={"#1b1a1e"}
           />
@@ -63,7 +61,6 @@ const Chart = () => {
           <AxisBottom
             scale={xScale}
             top={yMax}
-            label={"Years"}
             stroke={"#1b1a1e"}
             tickTextFill={"#1b1a1e"}
           />

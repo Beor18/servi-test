@@ -84,7 +84,15 @@ const Home = () => {
         </Link>
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <Chart />
+        <Chart
+          data={call}
+          dataX={call.map((item) => {
+            return Math.round(item.temp.day);
+          })}
+          dataY={call.map((item) => {
+            return Math.round(item.temp.day);
+          })}
+        />
       </Grid>
       <h2 className={classes.containerTitleDaily}>
         Pronostico próximos 5 días
