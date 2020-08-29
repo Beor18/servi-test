@@ -86,38 +86,43 @@ const Home = () => {
       <Grid item xs={12} sm={12} md={6}>
         <Chart />
       </Grid>
-      <Grid container className={classes.containerDaily} spacing={2}>
-        <h2 className={classes.containerTitleDaily}>
-          Pronostico próximos 5 días
-        </h2>
-        {call.slice(0, 5).map((item, index) => {
-          return (
-            <Grid item xs={12} sm={12} md={2} key={index} className={classes.containerGridCard}>
-              <div className={classes.containerCard}>
-                <Link
-                  to={`/forecast/${moment(item.sunrise).format("Do_MMMM")}`}
-                  key={index}
-                  style={{ textDecoration: "none" }}
-                >
-                  <CardWheather
-                    time={moment.unix(item.dt).format("Do MMMM")}
-                    temperatureMin={Math.round(item.temp.min)}
-                    temperatureMax={Math.round(item.temp.max)}
-                    description={item.weather.map((i) => {
-                      return i.description;
-                    })}
-                    button={false}
-                    humidity={call.humidity}
-                    image={item.weather.map((i) => {
-                      return i.icon;
-                    })}
-                  />
-                </Link>
-              </div>
-            </Grid>
-          );
-        })}
-      </Grid>
+      <h2 className={classes.containerTitleDaily}>
+        Pronostico próximos 5 días
+      </h2>
+      {call.slice(0, 5).map((item, index) => {
+        return (
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={2}
+            key={index}
+            className={classes.containerGridCard}
+          >
+            <div className={classes.containerCard}>
+              <Link
+                to={`/forecast/${moment(item.sunrise).format("Do_MMMM")}`}
+                key={index}
+                style={{ textDecoration: "none" }}
+              >
+                <CardWheather
+                  time={moment.unix(item.dt).format("Do MMMM")}
+                  temperatureMin={Math.round(item.temp.min)}
+                  temperatureMax={Math.round(item.temp.max)}
+                  description={item.weather.map((i) => {
+                    return i.description;
+                  })}
+                  button={false}
+                  humidity={call.humidity}
+                  image={item.weather.map((i) => {
+                    return i.icon;
+                  })}
+                />
+              </Link>
+            </div>
+          </Grid>
+        );
+      })}
     </Grid>
   );
 };
